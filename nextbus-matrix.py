@@ -128,8 +128,9 @@ class tile:
 				count += 1
 				if count >= maxPredictions:
 					break
-			draw.text((x, self.y + fontYoffset + 8),
-			  ' minutes', font=font, fill=minsColor)
+			if count > 0:
+				draw.text((x, self.y + fontYoffset + 8),
+				  ' minutes', font=font, fill=minsColor)
 
 
 # Allocate list of tile objects, enough to cover screen while scrolling
