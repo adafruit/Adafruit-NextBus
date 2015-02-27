@@ -6,6 +6,7 @@ import Image
 import ImageDraw
 import ImageFont
 import math
+import os
 import time
 from predict import predict
 from rgbmatrix import Adafruit_RGBmatrix
@@ -42,7 +43,8 @@ noTimesColor   = (  0,   0, 255) # No predictions = blue
 # TrueType fonts are a bit too much for the Pi to handle -- slow updates and
 # it's hard to get them looking good at small sizes.  A small bitmap version
 # of Helvetica Regular taken from X11R6 standard distribution works well:
-font           = ImageFont.load('helvR08.pil')
+font           = ImageFont.load(os.path.dirname(os.path.realpath(__file__))
+                   + '/helvR08.pil')
 fontYoffset    = -2  # Scoot up a couple lines so descenders aren't cropped
 
 
