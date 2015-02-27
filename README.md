@@ -10,5 +10,3 @@ predict.py: class that handles periodic queries to the NextBus server. Imported 
 nextbus-simple.py: Minimal front-end to demonstrate use of predict.py. Prints to cosole every 5 seconds.
 
 nextbus-matrix.py: Scrolling marquee using 32x32 RGB LED matrix. Requires rpi-rgb-led-matrix library: https://github.com/adafruit/rpi-rgb-led-matrix
-
-nextbus-backpack.py: A more subdued UI using Adafruit LED Backpack 7-segment displays. Requires backpack library: https://github.com/adafruit/Adafruit_Python_LED_Backpack or https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code (TBD)
