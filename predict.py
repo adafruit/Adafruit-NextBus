@@ -8,7 +8,8 @@ import urllib
 from xml.dom.minidom import parseString
 
 class predict:
-	interval = 120 # Default polling interval = 2 minutes
+	interval  = 120 # Default polling interval = 2 minutes
+	initSleep = 0   # Stagger polling threads to avoid load spikes
 
 	# predict object initializer.  1 parameter, a 4-element tuple:
 	# First element is agengy tag (e.g. 'actransit')
@@ -31,18 +32,22 @@ class predict:
 
 	# Periodically get predictions from server ---------------------------
 	def thread(self):
+		initSleep          = predict.initSleep
+		predict.initSleep += 5   # Thread staggering may
+		time.sleep(initSleep)    # drift over time, no problem
 		while True:
 			dom = predict.req('predictions' +
-			  '&a=' + self.data[0] + # Agency
-			  '&r=' + self.data[1] + # Route
-			  '&s=' + self.data[2])  # Stop
-			if dom is None: return   # Connection error
+			  '&a=' + self.data[0] +   # Agency
+			  '&r=' + self.data[1] +   # Route
+			  '&s=' + self.data[2])    # Stop
+			if dom is None: return     # Connection error
 			self.lastQueryTime = time.time()
 			predictions = dom.getElementsByTagName('prediction')
-			self.predictions   = []  # Clear current predictions
-			for p in predictions:    # Build new list
-				self.predictions.append(
+			newList     = []
+			for p in predictions:      # Build new prediction list
+				newList.append(
 				  int(p.getAttribute('seconds')))
+			self.predictions = newList # Replace current list
 			time.sleep(predict.interval)
 
 	# Open URL, send request, read & parse XML response ------------------
